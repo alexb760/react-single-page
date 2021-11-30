@@ -14,8 +14,9 @@ let SignIn = (props)=>{
         dispatch(
             signUp( {
                 credential: {
-                    mail: 'al@b.com',
-                    jwtToken: 'jj334jñoi4ui'
+                    email: 'al@b.com',
+                    password: 'jj334jñoi4ui',
+                    username: 'alex'
                  }
             }  )
         )
