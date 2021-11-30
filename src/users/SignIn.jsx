@@ -1,42 +1,36 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { signUp, logOut } from "../store/user"
+import { useForm } from "react-hook-form"
+import { useDispatch } from "react-redux";
+import { signIn } from "../store/user";
 
 let SignIn = (props)=>{
-    //Enviando acciones a los reducer.
-    let dispatch = useDispatch();
-
-    //Recolectando las propiedades de Redux usamos el hook de redux useSelector
-    let user = useSelector( state => state.user.user);
-    console.log(user)
-
-    let doSignIn = ()=>{
+    let dispatch = useDispatch()
+    const {register, handleSubmit} = useForm()
+    let onSubmit = (data)=>{
         dispatch(
-            signUp( {
-                credential: {
-                    email: 'al@b.com',
-                    password: 'jj334jñoi4ui',
-                    username: 'alex'
-                 }
-            }  )
+            signIn( {credential: data} )
         )
     }
 
-    let doLogOut = ()=>{
-        dispatch(
-            logOut()
-        )
-    }
-
-    return ( 
+    return (
         <div>
-            {
-                user ?
-                <button onClick= { doLogOut }>Cerrar Session</button>
-                :
-                <button onClick= { doSignIn }>Ingresar</button>
-            }
-        </div>
+        <form onSubmit={ handleSubmit( onSubmit) }>
+            <label htmlFor="inputEmal">Email </label>
+            <input 
+                type="email" 
+                name="inputEmal" 
+                {...register("email")} 
+                placeholder="Su email"></input>
+
+            <label htmlFor="inputPw">Password </label>
+            <input 
+                type="password" 
+                name="inputPw" 
+                placeholder="Su contraseña" 
+                {...register("password") }></input>
+            <input type="submit" value="enviar" />
+        </form>
+        </div> 
     )
 }
 
